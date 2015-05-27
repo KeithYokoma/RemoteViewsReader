@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.yokomark.remoteview.reader.action.RemoteViewsAction;
+import jp.yokomark.remoteview.reader.utils.ClassUtils;
 
 /**
  * @author KeishinYokomaku
@@ -24,12 +25,13 @@ public class RemoteViewsReader {
         if (remoteViews == null) {
             return null;
         }
+        Class clazz = ClassUtils.getRemoteViewsClass(remoteViews.getClass());
         try {
-            Field actionsField = remoteViews.getClass().getDeclaredField("mActions");
+            Field actionsField = clazz.getDeclaredField("mActions");
             actionsField.setAccessible(true);
             @SuppressWarnings("unchecked")
             ArrayList<Parcelable> list = (ArrayList<Parcelable>) actionsField.get(remoteViews);
-            Field applicationField = remoteViews.getClass().getDeclaredField("mApplication");
+            Field applicationField = clazz.getDeclaredField("mApplication");
             applicationField.setAccessible(true);
             ApplicationInfo applicationInfo = (ApplicationInfo) applicationField.get(remoteViews);
             int layoutId = remoteViews.getLayoutId();
