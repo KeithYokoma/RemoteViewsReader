@@ -1,5 +1,6 @@
 package jp.yokomark.remoteview.reader;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -21,7 +22,8 @@ import jp.yokomark.remoteview.reader.utils.ClassUtils;
 public class RemoteViewsReader {
     public static final String TAG = RemoteViewsReader.class.getSimpleName();
 
-    public static @Nullable RemoteViewsInfo read(@NonNull RemoteViews remoteViews) {
+    @SuppressWarnings("unchecked")
+    public static @Nullable RemoteViewsInfo read(@NonNull Context context, @NonNull RemoteViews remoteViews) {
         if (remoteViews == null) {
             return null;
         }
@@ -29,11 +31,8 @@ public class RemoteViewsReader {
         try {
             Field actionsField = clazz.getDeclaredField("mActions");
             actionsField.setAccessible(true);
-            @SuppressWarnings("unchecked")
             ArrayList<Parcelable> list = (ArrayList<Parcelable>) actionsField.get(remoteViews);
-            Field applicationField = clazz.getDeclaredField("mApplication");
-            applicationField.setAccessible(true);
-            ApplicationInfo applicationInfo = (ApplicationInfo) applicationField.get(remoteViews);
+            ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);
             int layoutId = remoteViews.getLayoutId();
             List<RemoteViewsAction> actions = new ArrayList<>(list.size());
             for (Parcelable p : list) {
