@@ -31,7 +31,7 @@ public class RemoteViewsReader {
         try {
             Field actionsField = clazz.getDeclaredField("mActions");
             actionsField.setAccessible(true);
-            ArrayList<Parcelable> list = (ArrayList<Parcelable>) actionsField.get(remoteViews);
+            List<Parcelable> list = (List<Parcelable>) actionsField.get(remoteViews);
             ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);
             int layoutId = remoteViews.getLayoutId();
             List<RemoteViewsAction> actions = new ArrayList<>(list.size());
