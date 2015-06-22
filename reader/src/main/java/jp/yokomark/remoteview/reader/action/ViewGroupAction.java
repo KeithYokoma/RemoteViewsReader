@@ -1,5 +1,6 @@
 package jp.yokomark.remoteview.reader.action;
 
+import android.content.Context;
 import android.widget.RemoteViews;
 
 import jp.yokomark.remoteview.reader.ActionMap;
@@ -27,10 +28,10 @@ public class ViewGroupAction extends RemoteViewsAction {
         return nested;
     }
 
-    public RemoteViewsInfo getNestedViewsInfo() {
+    public RemoteViewsInfo getNestedViewsInfo(Context context) {
         if (nested == null) {
             return null;
         }
-        return RemoteViewsReader.read(nested);
+        return RemoteViewsReader.read(context, nested);
     }
 }
