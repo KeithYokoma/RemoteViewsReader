@@ -7,6 +7,7 @@ import jp.yokomark.remoteview.reader.unmarshaller.ReflectionActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.ReflectionWithoutParamsActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.SetDrawableParamsActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.SetEmptyViewActionUnmarshaller;
+import jp.yokomark.remoteview.reader.unmarshaller.SetLaunchPendingIntentActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.SetOnClickFillInIntentActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.SetOnClickPendingIntentActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.SetPendingIntentTemplateActionUnmarshaller;
@@ -39,6 +40,7 @@ public enum ActionMap {
     VIEW_PADDING(14, new ViewPaddingActionUnmarshaller()),
     SET_REMOTE_VIEWS_ADAPTER_LIST(15, new SetRemoteViewsAdapterListActionUnmarshaller()),
     TEXT_VIEW_DRAWABLE_COLOR_FILTER_ACTION(17, new TextViewDrawableColorFilterActionUnmarshaller()),
+    SET_LAUNCH_PENDING_INTENT(20, new SetLaunchPendingIntentActionUnmarshaller()), // why do you do that to us ms samsung?
     UNKNOWN(0, new UnknownActionUnmarshaller());
 
     private final int tag;
