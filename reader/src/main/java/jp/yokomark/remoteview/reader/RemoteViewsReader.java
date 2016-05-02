@@ -28,12 +28,14 @@ public class RemoteViewsReader {
             return null;
         }
         Class clazz = ClassUtils.getRemoteViewsClass(remoteViews.getClass());
+        ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);
+        int layoutId = remoteViews.getLayoutId();
         try {
             Field actionsField = clazz.getDeclaredField("mActions");
             actionsField.setAccessible(true);
             List<Parcelable> list = (List<Parcelable>) actionsField.get(remoteViews);
-            ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);
-            int layoutId = remoteViews.getLayoutId();
+            if (list == null)
+                return RemoteViewsInfo.emptyActions(applicationInfo, layoutId);
             List<RemoteViewsAction> actions = new ArrayList<>(list.size());
             for (Parcelable p : list) {
                 Parcel action = Parcel.obtain();
@@ -49,6 +51,6 @@ public class RemoteViewsReader {
         } catch (IllegalAccessException e) {
             Log.e(TAG, "", e);
         }
-        return null;
+        return RemoteViewsInfo.emptyActions(applicationInfo, layoutId);
     }
 }

@@ -2,6 +2,7 @@ package jp.yokomark.remoteview.reader;
 
 import android.content.pm.ApplicationInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.yokomark.remoteview.reader.action.RemoteViewsAction;
@@ -18,6 +19,10 @@ public class RemoteViewsInfo {
         this.hostApplicaiton = hostApplicaiton;
         this.layoutId = layoutId;
         this.actions = actions;
+    }
+
+    /* package */ static RemoteViewsInfo emptyActions(ApplicationInfo hostApplicaiton, int layoutId) {
+        return new RemoteViewsInfo(hostApplicaiton, layoutId, new ArrayList<RemoteViewsAction>());
     }
 
     public void addAction(RemoteViewsAction action) {
