@@ -47,9 +47,9 @@ public class RemoteViewsReader {
             }
             return new RemoteViewsInfo(applicationInfo, layoutId, actions);
         } catch (NoSuchFieldException e) {
-            Log.e(TAG, "", e);
+            Log.e(TAG, "could not read the field: ", e);
         } catch (IllegalAccessException e) {
-            Log.e(TAG, "", e);
+            Log.e(TAG, "could not access the member: ", e);
         }
         return RemoteViewsInfo.emptyActions(applicationInfo, layoutId);
     }
