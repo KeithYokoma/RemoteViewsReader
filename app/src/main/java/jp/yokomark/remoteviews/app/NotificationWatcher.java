@@ -11,9 +11,9 @@ import java.util.List;
 
 import jp.yokomark.remoteview.reader.RemoteViewsInfo;
 import jp.yokomark.remoteview.reader.RemoteViewsReader;
+import jp.yokomark.remoteview.reader.action.IntentContainer;
 import jp.yokomark.remoteview.reader.action.RemoteViewsAction;
-import jp.yokomark.remoteview.reader.action.SetLaunchPendingIntentAction;
-import jp.yokomark.remoteview.reader.action.SetOnClickPendingIntentAction;
+import jp.yokomark.remoteview.reader.action.ViewGroupAction;
 
 /**
  * @author KeishinYokomaku
@@ -24,21 +24,28 @@ public class NotificationWatcher extends NotificationListenerService {
 	public void onNotificationPosted(StatusBarNotification sbn) {
 		RemoteViews views = sbn.getNotification().contentView;
 		RemoteViewsInfo info = RemoteViewsReader.read(this, views);
-		if (info == null)
-			return;
 		List<RemoteViewsAction> actions = info.getActions();
-		for (RemoteViewsAction action : actions) {
-			Log.v("NotificationWatcher", action.getActionName());
-			if (action instanceof SetLaunchPendingIntentAction) {
-				SetLaunchPendingIntentAction p = (SetLaunchPendingIntentAction) action;
-				Log.v("NotificationWatcher", p.getContentIntent().toString());
-			} else if (action instanceof SetOnClickPendingIntentAction) {
-				SetOnClickPendingIntentAction p = (SetOnClickPendingIntentAction) action;
-				Log.v("NotificationWatcher", p.getContentIntent().toString());
-			}
-		}
+		dump(actions);
 	}
 
 	@Override
 	public void onNotificationRemoved(StatusBarNotification sbn) {}
+
+	private void dump(List<RemoteViewsAction> actions) {
+		for (RemoteViewsAction action : actions) {
+			Log.v("NotificationWatcher", action.getActionName());
+			if (action instanceof IntentContainer) {
+				IntentContainer p = (IntentContainer) action;
+				Log.v("NotificationWatcher", p.getContentIntent().toString());
+			} else if (action instanceof ViewGroupAction) {
+				ViewGroupAction v = (ViewGroupAction) action;
+				RemoteViewsInfo nested = v.getNestedViewsInfo(this);
+				if (nested != null) {
+					Log.v("NotificationWatcher", "nested views found====");
+					dump(nested.getActions());
+					Log.v("NotificationWatcher", "======================");
+				}
+			}
+		}
+	}
 }
