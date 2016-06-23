@@ -12,6 +12,8 @@ import java.util.List;
 import jp.yokomark.remoteview.reader.RemoteViewsInfo;
 import jp.yokomark.remoteview.reader.RemoteViewsReader;
 import jp.yokomark.remoteview.reader.action.RemoteViewsAction;
+import jp.yokomark.remoteview.reader.action.SetLaunchPendingIntentAction;
+import jp.yokomark.remoteview.reader.action.SetOnClickPendingIntentAction;
 
 /**
  * @author KeishinYokomaku
@@ -25,8 +27,16 @@ public class NotificationWatcher extends NotificationListenerService {
 		if (info == null)
 			return;
 		List<RemoteViewsAction> actions = info.getActions();
-		for (RemoteViewsAction action : actions)
+		for (RemoteViewsAction action : actions) {
 			Log.v("NotificationWatcher", action.getActionName());
+			if (action instanceof SetLaunchPendingIntentAction) {
+				SetLaunchPendingIntentAction p = (SetLaunchPendingIntentAction) action;
+				Log.v("NotificationWatcher", p.getContentIntent().toString());
+			} else if (action instanceof SetOnClickPendingIntentAction) {
+				SetOnClickPendingIntentAction p = (SetOnClickPendingIntentAction) action;
+				Log.v("NotificationWatcher", p.getContentIntent().toString());
+			}
+		}
 	}
 
 	@Override

@@ -29,9 +29,9 @@ public class SetLaunchPendingIntentAction extends RemoteViewsAction {
 
     public Intent getContentIntent() {
         try {
-            Method getIntent = pendingIntent.getClass().getDeclaredMethod("getIntent", null);
+            Method getIntent = pendingIntent.getClass().getDeclaredMethod("getIntent");
             getIntent.setAccessible(true);
-            return (Intent) getIntent.invoke(pendingIntent, null);
+            return (Intent) getIntent.invoke(pendingIntent);
         } catch (NoSuchMethodException e) {
             Log.e(TAG, "", e);
         } catch (InvocationTargetException e) {
