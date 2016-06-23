@@ -1,12 +1,10 @@
 package jp.yokomark.remoteview.reader.action;
 
 import android.app.PendingIntent;
-import android.content.Intent;
 
 /**
  * @author KeishinYokomaku
  */
-public interface PendingIntentContainer {
+public interface PendingIntentContainer extends IntentContainer {
 	PendingIntent getPendingIntent();
-	Intent getContentIntent();
 }

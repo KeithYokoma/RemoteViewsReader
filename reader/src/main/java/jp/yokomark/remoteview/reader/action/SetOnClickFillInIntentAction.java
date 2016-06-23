@@ -7,7 +7,7 @@ import jp.yokomark.remoteview.reader.ActionMap;
 /**
  * @author KeishinYokomaku
  */
-public class SetOnClickFillInIntentAction extends RemoteViewsAction {
+public class SetOnClickFillInIntentAction extends RemoteViewsAction implements IntentContainer {
     public static final String TAG = SetOnClickFillInIntentAction.class.getSimpleName();
     private final Intent intent;
 
@@ -21,7 +21,8 @@ public class SetOnClickFillInIntentAction extends RemoteViewsAction {
         return "SetOnClickFillInIntentAction";
     }
 
-    public Intent getIntent() {
+    @Override
+    public Intent getContentIntent() {
         return intent;
     }
 }
