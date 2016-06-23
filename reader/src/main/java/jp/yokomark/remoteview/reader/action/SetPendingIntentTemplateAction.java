@@ -12,7 +12,7 @@ import jp.yokomark.remoteview.reader.ActionMap;
 /**
  * @author KeishinYokomaku
  */
-public class SetPendingIntentTemplateAction extends RemoteViewsAction {
+public class SetPendingIntentTemplateAction extends RemoteViewsAction implements PendingIntentContainer {
     public static final String TAG = SetPendingIntentTemplateAction.class.getSimpleName();
     private final PendingIntent pendingIntent;
 
@@ -26,10 +26,12 @@ public class SetPendingIntentTemplateAction extends RemoteViewsAction {
         return "SetPendingIntentTemplateAction";
     }
 
+    @Override
     public PendingIntent getPendingIntent() {
         return pendingIntent;
     }
 
+    @Override
     public Intent getContentIntent() {
         try {
             Method getIntent = pendingIntent.getClass().getDeclaredMethod("getIntent");
