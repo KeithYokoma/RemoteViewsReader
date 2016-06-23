@@ -5,7 +5,6 @@ import android.content.pm.ApplicationInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -23,9 +22,9 @@ public class RemoteViewsReader {
     public static final String TAG = RemoteViewsReader.class.getSimpleName();
 
     @SuppressWarnings("unchecked")
-    public static @Nullable RemoteViewsInfo read(@NonNull Context context, @NonNull RemoteViews remoteViews) {
+    public static @NonNull RemoteViewsInfo read(@NonNull Context context, @NonNull RemoteViews remoteViews) {
         if (remoteViews == null) {
-            return null;
+            return RemoteViewsInfo.noInfo();
         }
         Class clazz = ClassUtils.getRemoteViewsClass(remoteViews.getClass());
         ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);

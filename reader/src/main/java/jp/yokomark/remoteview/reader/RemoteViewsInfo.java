@@ -25,6 +25,10 @@ public class RemoteViewsInfo {
         return new RemoteViewsInfo(hostApplicaiton, layoutId, new ArrayList<RemoteViewsAction>());
     }
 
+    /* package */ static RemoteViewsInfo noInfo() {
+        return new RemoteViewsInfo(null, 0, new ArrayList<RemoteViewsAction>());
+    }
+
     public void addAction(RemoteViewsAction action) {
         actions.add(action);
     }
