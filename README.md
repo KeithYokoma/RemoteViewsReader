@@ -6,6 +6,12 @@ Read RemoteViews information with some black magic way.
 
 See [RemoteViews](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/widget/RemoteViews.java).
 
+## Caution
+
+As of Android Pie, the system will notify you that you are using hidden APIs (in other words, non-SDK APIs) via reflection.
+This library aims to read remote view properties by reflection so you will see bunch of warnings if you use this library.
+And the severity of the warning may change in the future.
+
 ## Usage
 
 ### Read informations
