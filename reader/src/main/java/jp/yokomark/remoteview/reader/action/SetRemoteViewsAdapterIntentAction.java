@@ -1,6 +1,7 @@
 package jp.yokomark.remoteview.reader.action;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import jp.yokomark.remoteview.reader.ActionMap;
 
@@ -22,6 +23,7 @@ public class SetRemoteViewsAdapterIntentAction extends RemoteViewsAction impleme
     }
 
     @Override
+    @Nullable
     public Intent getContentIntent() {
         return intent;
     }

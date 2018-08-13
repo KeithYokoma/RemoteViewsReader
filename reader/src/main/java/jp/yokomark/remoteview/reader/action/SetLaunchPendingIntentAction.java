@@ -2,6 +2,7 @@ package jp.yokomark.remoteview.reader.action;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,12 +25,16 @@ public class SetLaunchPendingIntentAction extends RemoteViewsAction implements P
     }
 
     @Override
+    @Nullable
     public PendingIntent getPendingIntent() {
         return pendingIntent;
     }
 
     @Override
+    @Nullable
     public Intent getContentIntent() {
+        if (pendingIntent == null)
+            return null;
         try {
             Method getIntent = pendingIntent.getClass().getDeclaredMethod("getIntent");
             getIntent.setAccessible(true);
