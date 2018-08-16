@@ -41,7 +41,8 @@ public class RemoteViewsReader {
                 p.writeToParcel(action, 0);
                 action.setDataPosition(0);
 
-                ActionMap mapped = ActionMap.find(action.readInt());
+
+                ActionMap mapped = ActionMap.find(action.readInt(), p.getClass().getSimpleName());
                 actions.add(mapped.getUnmarshaller().unmarshal(p, action));
             }
             return new RemoteViewsInfo(applicationInfo, layoutId, actions);
