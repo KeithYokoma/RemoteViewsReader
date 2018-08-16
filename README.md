@@ -115,7 +115,7 @@ I've found several types of additional customized actions on some devices, and t
 Via Gradle
 
 ```
-implementation 'com.github.keithyokoma:RemoteViewsReader:1.2.2@aar'
+implementation 'com.github.keithyokoma:RemoteViewsReader:1.3.0@aar'
 ```
 
 ## License
