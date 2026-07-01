@@ -21,7 +21,14 @@ import jp.yokomark.remoteview.reader.action.ViewGroupAction;
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class NotificationWatcher extends NotificationListenerService {
 	@Override
+	public void onCreate() {
+		super.onCreate();
+		Log.i("NotificationWatcher", "onCreate");
+	}
+
+	@Override
 	public void onNotificationPosted(StatusBarNotification sbn) {
+		Log.i("NotificationWatcher", "onNotificationPosted");
 		RemoteViews views = sbn.getNotification().contentView;
 		RemoteViewsInfo info = RemoteViewsReader.read(this, views);
 		List<RemoteViewsAction> actions = info.getActions();
@@ -32,6 +39,7 @@ public class NotificationWatcher extends NotificationListenerService {
 	public void onNotificationRemoved(StatusBarNotification sbn) {}
 
 	private void dump(List<RemoteViewsAction> actions) {
+		Log.i("NotificationWatcher", "dump: actions=" + actions);
 		for (RemoteViewsAction action : actions) {
 			Log.v("NotificationWatcher", action.getActionName());
 			if (action instanceof IntentContainer) {
