@@ -1,6 +1,6 @@
 package jp.yokomark.remoteview.reader;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import jp.yokomark.remoteview.reader.unmarshaller.BitmapReflectionActionUnmarshaller;
 import jp.yokomark.remoteview.reader.unmarshaller.ReflectionActionUnmarshaller;

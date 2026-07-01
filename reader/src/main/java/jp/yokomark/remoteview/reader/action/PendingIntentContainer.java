@@ -1,7 +1,7 @@
 package jp.yokomark.remoteview.reader.action;
 
 import android.app.PendingIntent;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * @author KeishinYokomaku

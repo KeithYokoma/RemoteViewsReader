@@ -1,28 +1,70 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
 
 android {
-    compileSdkVersion 28
+    namespace 'jp.yokomark.remoteview.reader'
+    compileSdk 35
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdk 21
+        targetSdk 35
     }
-    lintOptions {
+    lint {
         checkReleaseBuilds false
         abortOnError false
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 
 dependencies {
-    implementation 'com.android.support:support-annotations:28.0.0-rc01'
+    implementation 'androidx.annotation:annotation:1.9.1'
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
-
 afterEvaluate {
-    androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = project.findProperty('GROUP')
+                artifactId = project.findProperty('POM_ARTIFACT_ID')
+                version = project.findProperty('VERSION_NAME')
+
+                pom {
+                    name = project.findProperty('POM_NAME')
+                    description = project.findProperty('POM_DESCRIPTION')
+                    url = project.findProperty('POM_URL')
+                    licenses {
+                        license {
+                            name = project.findProperty('POM_LICENCE_NAME')
+                            url = project.findProperty('POM_LICENCE_URL')
+                            distribution = project.findProperty('POM_LICENCE_DIST')
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = project.findProperty('POM_DEVELOPER_ID')
+                            name = project.findProperty('POM_DEVELOPER_NAME')
+                        }
+                    }
+                    scm {
+                        url = project.findProperty('POM_SCM_URL')
+                        connection = project.findProperty('POM_SCM_CONNECTION')
+                        developerConnection = project.findProperty('POM_SCM_DEV_CONNECTION')
+                    }
+                }
+            }
+        }
+    }
 }

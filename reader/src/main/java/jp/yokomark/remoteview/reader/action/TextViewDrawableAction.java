@@ -1,6 +1,6 @@
 package jp.yokomark.remoteview.reader.action;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import jp.yokomark.remoteview.reader.ActionMap;
 
