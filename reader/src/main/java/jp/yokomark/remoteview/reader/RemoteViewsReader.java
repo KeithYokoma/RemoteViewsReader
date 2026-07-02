@@ -23,27 +23,27 @@ public class RemoteViewsReader {
 
     @SuppressWarnings("unchecked")
     public static @NonNull RemoteViewsInfo read(@NonNull Context context, @NonNull RemoteViews remoteViews) {
-        if (remoteViews == null) {
-            return RemoteViewsInfo.noInfo();
-        }
         Class clazz = ClassUtils.getRemoteViewsClass(remoteViews.getClass());
         ApplicationInfo applicationInfo = ClassUtils.getApplicationInfo(context, remoteViews, clazz);
         int layoutId = remoteViews.getLayoutId();
         try {
             Field actionsField = clazz.getDeclaredField("mActions");
             actionsField.setAccessible(true);
-            List<Parcelable> list = (List<Parcelable>) actionsField.get(remoteViews);
+            List<Object> list = (List<Object>) actionsField.get(remoteViews);
             if (list == null)
                 return RemoteViewsInfo.emptyActions(applicationInfo, layoutId);
             List<RemoteViewsAction> actions = new ArrayList<>(list.size());
-            for (Parcelable p : list) {
-                Parcel action = Parcel.obtain();
-                p.writeToParcel(action, 0);
-                action.setDataPosition(0);
-
-
-                ActionMap mapped = ActionMap.find(action.readInt(), p.getClass().getSimpleName());
-                actions.add(mapped.getUnmarshaller().unmarshal(p, action));
+            for (Object obj : list) {
+                // Starting from Android 15, Action is no longer a type of Parcelable.
+                // Also, the member access via reflection is highly restricted and almost impossible
+                // to unmarshal, so if the action is not Parcelable we do nothing.
+                if (obj instanceof Parcelable p) {
+                    Parcel action = Parcel.obtain();
+                    p.writeToParcel(action, 0);
+                    action.setDataPosition(0);
+                    ActionMap mapped = ActionMap.find(action.readInt(), p.getClass().getSimpleName());
+                    actions.add(mapped.getUnmarshaller().unmarshal(p, action));
+                }
             }
             return new RemoteViewsInfo(applicationInfo, layoutId, actions);
         } catch (NoSuchFieldException e) {
