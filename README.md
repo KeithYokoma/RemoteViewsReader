@@ -12,6 +12,9 @@ As of Android Pie, the system will notify you that you are using hidden APIs (in
 This library aims to read remote view properties by reflection so you will see bunch of warnings if you use this library.
 And the severity of the warning may change in the future.
 
+Starting from Android 15, non-SDK API usages of RemoteViews are no longer allowed. This library
+may not work as expected on Android 15 or newer.
+
 ## Usage
 
 ### Read informations
